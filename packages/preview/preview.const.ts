@@ -1,13 +1,3 @@
-import DocxPreview from './supports/docx-preview/index'
-import XlsxPreview from './supports/xlsx-preview/index'
-import PdfPreview from './supports/pdf-preview/index'
-import PicPreview from './supports/pic-preview/index'
-import TxtPreview from './supports/txt-preview/index'
-import CodePreview from './supports/code-preview/index'
-import MdPreview from './supports/md-preview/index'
-import EpubPreview from './supports/epub-preview/index'
-import AudioPreview from './supports/audio-preview/index'
-import VideoPreview from './supports/video-preview/index'
 import type {IPreviewRule} from './preview.interface'
 import {PreviewType} from './preview.interface'
 
@@ -20,80 +10,80 @@ export const videoPreviewTypeList = [PreviewType.VIDEO]
 export const PreviewRules: Record<PreviewType, IPreviewRule> = {
     [PreviewType.NONE]: {
         name: '',
-        component: void 0,
+        component: null,
         type: PreviewType.NONE,
         accept: [],
     },
     [PreviewType.CODE]: {
         name: '',
-        component: CodePreview,
+        component: () => import('./supports/code-preview/index.vue'),
         type: PreviewType.CODE,
         accept: ['html', 'css', 'less', 'scss', 'js', 'json', 'ts', 'vue', 'c', 'cpp', 'java', 'py', 'go', 'php', 'lua', 'rb', 'pl', 'swift', 'vb', 'cs', 'sh', 'rs', 'vim', 'log', 'lock', 'swift', 'mod', 'mht', 'mhtml', 'xml'],
     },
     [PreviewType.DOC]: {
         name: '',
-        component: void 0,
+        component: null,
         type: PreviewType.DOC,
         accept: ['doc', 'docm', 'dot', 'dotm', 'dotx', 'fodt', 'mht', 'odt', 'ott', 'rtf', 'djvu', 'xps'],
     },
     [PreviewType.DOCX]: {
         name: '',
-        component: DocxPreview,
+        component: () => import('./supports/docx-preview/index.vue'),
         type: PreviewType.DOCX,
         accept: ['docx'],
     },
     [PreviewType.XLSX]: {
         name: '',
-        component: XlsxPreview,
+        component: () => import('./supports/xlsx-preview/index.vue'),
         type: PreviewType.XLSX,
         accept: ['xlsx', 'xls', 'csv', 'fods', 'ods', 'ots', 'xlsm', 'xlt', 'xltm'],
     },
     // ppt: presentation
     [PreviewType.PPT]: {
         name: '',
-        component: void 0,
+        component: null,
         type: PreviewType.PPT,
         accept: ['ppt', 'pptx', 'fodp', 'odp', 'otp', 'pot', 'potm', 'potx', 'pps', 'ppsm', 'ppsx', 'pptm'],
     },
     [PreviewType.PDF]: {
         name: '',
-        component: PdfPreview,
+        component: () => import('./supports/pdf-preview/index.vue'),
         type: PreviewType.PDF,
         accept: ['pdf'],
     },
     [PreviewType.EPUB]: {
         name: '',
-        component: EpubPreview,
+        component: () => import('./supports/epub-preview/index.vue'),
         type: PreviewType.EPUB,
         accept: ['epub'],
     },
     [PreviewType.MD]: {
         name: '',
-        component: MdPreview,
+        component: () => import('./supports/md-preview/index.vue'),
         type: PreviewType.MD,
         accept: ['md'],
     },
     [PreviewType.PIC]: {
         name: '',
-        component: PicPreview,
+        component: () => import('./supports/pic-preview/index.vue'),
         type: PreviewType.PIC,
         accept: ['jpg', 'png', 'jpeg', 'webp', 'gif', 'bmp', 'svg', 'ico'],
     },
     [PreviewType.TXT]: {
         name: '',
-        component: TxtPreview,
+        component: () => import('./supports/txt-preview/index.vue'),
         type: PreviewType.TXT,
         accept: ['txt'],
     },
     [PreviewType.AUDIO]: {
         name: '',
-        component: AudioPreview,
+        component: () => import('./supports/audio-preview/index.vue'),
         type: PreviewType.AUDIO,
         accept: ['mp3', 'wav', 'wma', 'ogg', 'aac', 'flac'],
     },
     [PreviewType.VIDEO]: {
         name: '',
-        component: VideoPreview,
+        component: () => import('./supports/video-preview/index.vue'),
         type: PreviewType.VIDEO,
         accept: ['mp4', 'webm', 'ogg', 'mkv', 'avi', 'mpeg', 'flv', 'mov', 'wmv'],
     },

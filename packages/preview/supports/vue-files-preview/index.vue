@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { watch } from 'vue'
+import { watch, shallowRef, defineAsyncComponent } from 'vue'
 import { PreviewRules, getPreviewTypeByFileType } from '../../preview.const'
 import type { IPreviewRule, PreviewProps } from '../../preview.interface'
 import { PreviewType } from '../../preview.interface'
@@ -21,12 +21,30 @@ const props = withDefaults(
 )
 
 const currentPreview = shallowRef<IPreviewRule>(PreviewRules[PreviewType.NONE])
+const loadedComponent = shallowRef<any>(null)
+const isLoading = shallowRef(false)
 
-function syncPreview(file: File): void {
+async function syncPreview(file: File): Promise<void> {
   const preview = PreviewRules[getPreviewTypeByFileType(getFileType(file))]
   if (preview) {
     preview.name = getFileName(file)
     currentPreview.value = preview
+    
+    // Load component asynchronously if it's a function
+    if (preview.component && typeof preview.component === 'function') {
+      isLoading.value = true
+      try {
+        const componentModule = await (preview.component as () => Promise<any>)()
+        loadedComponent.value = defineAsyncComponent(() => Promise.resolve(componentModule))
+      } catch (error) {
+        console.error('Failed to load preview component:', error)
+        loadedComponent.value = null
+      } finally {
+        isLoading.value = false
+      }
+    } else {
+      loadedComponent.value = preview.component
+    }
   }
 }
 
@@ -43,8 +61,38 @@ watch(
 
 <template>
   <div class="vue-files-preview" :style="{ width, height, overflow }">
-    <component :is="currentPreview.component" :name="currentPreview.name" :file="file" :url="url" />
+    <div v-if="isLoading" class="loading-placeholder">
+      Loading preview...
+    </div>
+    <component 
+      v-else-if="loadedComponent" 
+      :is="loadedComponent" 
+      :name="currentPreview.name" 
+      :file="file" 
+      :url="url" 
+    />
+    <div v-else class="no-preview">
+      No preview available for this file type
+    </div>
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.loading-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #666;
+  font-size: 14px;
+}
+
+.no-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #999;
+  font-size: 14px;
+}
+</style>

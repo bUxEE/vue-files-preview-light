@@ -1,30 +1,8 @@
-import {
-    AudioPreview,
-    CodePreview,
-    DocxPreview,
-    EpubPreview,
-    MdPreview,
-    PdfPreview,
-    PicPreview,
-    TxtPreview,
-    VideoPreview,
-    VueFilesPreview,
-    XlsxPreview,
-} from './preview/supports/index.js'
+import VueFilesPreview from './preview/supports/vue-files-preview/index.js'
 import {version} from './version.js'
 
 const components = {
     VueFilesPreview,
-    AudioPreview,
-    CodePreview,
-    DocxPreview,
-    EpubPreview,
-    MdPreview,
-    PdfPreview,
-    PicPreview,
-    TxtPreview,
-    VideoPreview,
-    XlsxPreview,
 }
 
 function install(app: import('vue').App<any>): void {
@@ -36,14 +14,4 @@ function install(app: import('vue').App<any>): void {
 export default {version, install}
 export {
     VueFilesPreview,
-    AudioPreview,
-    CodePreview,
-    DocxPreview,
-    EpubPreview,
-    MdPreview,
-    PdfPreview,
-    PicPreview,
-    TxtPreview,
-    VideoPreview,
-    XlsxPreview,
 }

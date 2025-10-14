@@ -9,7 +9,7 @@ export interface IPreviewRule {
     name: string
     type: PreviewType
     accept: Array<string>
-    component: Component
+    component: Component | (() => Promise<Component>) | null
 }
 
 // Preview component types - how many preview modes and items
