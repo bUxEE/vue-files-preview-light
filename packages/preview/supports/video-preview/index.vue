@@ -19,7 +19,7 @@ watch(
         fileRender.value && URL.revokeObjectURL(fileRender.value)
         getFileRenderByFile(file).then((render) => {
           fileRender.value = render
-          // 设置视频元素的src
+          // Set video element src
           videoPreviewRef.value.src = fileRender.value
         })
       }
@@ -28,14 +28,14 @@ watch(
 )
 const videoPreviewRef = shallowRef(null)
 onMounted(() => {
-  // 监听视频元素的loadedmetadata事件，以便在视频加载完成后自动播放
+  // Listen to video element's loadedmetadata event to auto-play when video is loaded
   videoPreviewRef.value.addEventListener('loadedmetadata', () => {
     videoPreviewRef.value.play()
   })
 })
 
 onBeforeUnmount(() => {
-  // 组件销毁时，释放视频元素的src
+  // Release video element src when component is destroyed
   videoPreviewRef.value.pause()
   if (props.file) {
     URL.revokeObjectURL(fileRender.value)
@@ -57,18 +57,18 @@ onBeforeUnmount(() => {
   top: 0;
   width: 100vw !important;
   height: 100vh !important;
-  overflow: hidden; /* 隐藏溢出内容，保持全屏体验 */
-  background: rgba(0, 0, 0, 0.8); /* 背景色可提高视频对比度 */
-  display: flex; /* 使用 flexbox 来居中视频 */
-  align-items: center; /* 垂直居中 */
-  justify-content: center; /* 水平居中 */
+  overflow: hidden; /* Hide overflow content, maintain fullscreen experience */
+  background: rgba(0, 0, 0, 0.8); /* Background color can improve video contrast */
+  display: flex; /* Use flexbox to center video */
+  align-items: center; /* Vertical centering */
+  justify-content: center; /* Horizontal centering */
 }
 
 .player-video-main {
   width: 100%;
-  height: auto; /* 使视频保持宽高比 */
-  max-height: 100%; /* 限制最大高度以防溢出 */
-  object-fit: contain; /* 保持宽高比，可能会出现黑边 */
+  height: auto; /* Keep video aspect ratio */
+  max-height: 100%; /* Limit max height to prevent overflow */
+  object-fit: contain; /* Maintain aspect ratio, may show black bars */
   transition: .2s;
 }
 

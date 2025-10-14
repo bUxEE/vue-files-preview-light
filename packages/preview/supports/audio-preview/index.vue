@@ -25,7 +25,7 @@ const mode = ref('Wavy')
 const src = ref(null)
 
 /**
- * 初始化 Dom
+ * Initialize DOM
  */
 function initDom(): void {
   audioDom.value = proxy.$refs.audioRef as HTMLAudioElement
@@ -46,7 +46,7 @@ const maxOffset = computed(() => {
 })
 
 /**
- * 初始化canvas
+ * Initialize canvas
  */
 function initCanvas() {
   canvasDom.value.width = window.innerWidth * devicePixelRatio
@@ -54,14 +54,14 @@ function initCanvas() {
 }
 
 /**
- * 音频播放
+ * Audio playback
  */
 function audioPlay() {
   audioDom.value.onplay = () => {
     if (isInit.value)
       return
-    const audCtx = new AudioContext() // 音频上下文
-    const source = audCtx.createMediaElementSource(audioDom.value) // 音频源节点
+    const audCtx = new AudioContext() // Audio context
+    const source = audCtx.createMediaElementSource(audioDom.value) // Audio source node
     analyser.value = audCtx.createAnalyser()
     analyser.value.fftSize = 512
     dataSource.value = new Uint8Array(analyser.value.frequencyBinCount)
@@ -72,7 +72,7 @@ function audioPlay() {
   }
 }
 
-// 柱状
+// Columnar
 function drawColumnar() {
   requestAnimationFrame(drawColumnar)
   const {width, height} = canvasDom.value
@@ -94,7 +94,7 @@ function drawColumnar() {
   }
 }
 
-// 波浪
+// Wave
 function drawWavy() {
   requestAnimationFrame(drawWavy)
   const {width, height} = canvasDom.value
@@ -128,7 +128,7 @@ function drawWavy() {
 }
 
 /**
- * 切换模式
+ * Switch mode
  */
 function changeMode() {
   mode.value = mode.value === 'Columnar' ? 'Wavy' : 'Columnar'
@@ -141,10 +141,10 @@ onBeforeMount(() => {
   })
 })
 onMounted(() => {
-  initDom() // 初始化 Dom
-  audioPlay() // 音频播放
-  initCanvas() // 初始化 canvas
-  drawWavy() // 绘制波浪
+  initDom() // Initialize DOM
+  audioPlay() // Audio playback
+  initCanvas() // Initialize canvas
+  drawWavy() // Draw wave
 })
 </script>
 

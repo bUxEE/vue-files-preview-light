@@ -9,7 +9,7 @@ import {
 } from '../preview.const'
 
 /**
- * 获取文件类型
+ * Get file type
  * @param file
  */
 export function getFileType(file: File): string {
@@ -19,7 +19,7 @@ export function getFileType(file: File): string {
 }
 
 /**
- * 获取文件名
+ * Get file name
  * @param file
  */
 export function getFileName(file: File): string {
@@ -29,7 +29,7 @@ export function getFileName(file: File): string {
 }
 
 /**
- * 通过文件类型获取fileRender
+ * Get fileRender by file type
  */
 export function getFileRenderByFile(file: File): Promise<ArrayBuffer | string> {
     const previewType = getPreviewTypeByFileType(getFileType(file))
@@ -72,7 +72,7 @@ export function getFileRenderByFile(file: File): Promise<ArrayBuffer | string> {
 }
 
 /**
- * 获取文件渲染数据类型
+ * Get file render data type
  * @param previewType
  */
 export function getFileRenderType(previewType: PreviewType): FileRenderType {

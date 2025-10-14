@@ -65,11 +65,11 @@ export function copyPackageJsonPlugin(): Plugin {
                     homepage: packageJson.homepage,
                 }
 
-                // 将 distPackageJson 写入 dist 目录
+                // Write distPackageJson to dist directory
                 writeFileSync(join(__dirname, '../dist', 'package.json'), JSON.stringify(distPackageJson, null, 2))
                 console.log('package.json copied and modified successfully!')
 
-                // 如果需要，可以复制 README.md 等其他文件到 dist 目录
+                // If needed, can copy README.md and other files to dist directory
                 copyFileSync(join(__dirname, '../README.md'), join(__dirname, '../dist', 'README.md'))
             } catch (error) {
                 console.error('Error while copying and modifying package.json:', error)

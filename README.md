@@ -112,7 +112,7 @@ const beforeFileUpload = (rawFile) => {
 
 ### Page
 
-![测试默认界面](assets/images/readme/default.png)
+![Test Default Interface](assets/images/readme/default.png)
 
 This demo is already here [vue-files-preview-demo](https://github.com/VueFilesPreview/vue-files-preview-demo), click to
 view it.

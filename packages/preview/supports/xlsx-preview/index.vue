@@ -29,11 +29,11 @@ watch(
 )
 
 function renderedHandler(): void {
-  console.log('渲染完成')
+  console.log('Rendering completed')
 }
 
 function errorHandler(): void {
-  console.log('渲染失败')
+  console.log('Rendering failed')
 }
 </script>
 

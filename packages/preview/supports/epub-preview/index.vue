@@ -30,7 +30,7 @@ function initEpub(): void {
     getFileRenderByFile(props.file).then((render) => {
       book.value = ePub(render as ArrayBuffer)
       rendition.value = book.value.renderTo('epub-viewer', {
-        // 滚动模式
+        // Scroll mode
         width: '100%',
         height: 'calc(100vh - 80x)',
         flow: 'scrolled',
@@ -40,7 +40,7 @@ function initEpub(): void {
         navigation.value = book.value.navigation
         locations.value = book.value.locations
         bookAvailable.value = true
-        // // 获取总页数
+        // // Get total page count
         totalPages.value = locations.value.length()
         rendition.value.display()
       })
@@ -56,11 +56,11 @@ watch(
     {immediate: true},
 )
 
-// epub翻页
+// epub page turning
 function prevPage(): void {
   if (rendition.value) {
     rendition.value.prev()
-    // 向前翻页时更新 currentPage
+    // Update currentPage when turning to previous page
     currentPage.value--
     if (currentPage.value < 1) {
       currentPage.value = 1
@@ -71,7 +71,7 @@ function prevPage(): void {
 function nextPage(): void {
   if (rendition.value) {
     rendition.value.next()
-    // 向后翻页时更新 currentPage
+    // Update currentPage when turning to next page
     currentPage.value++
     if (currentPage.value > totalPages.value) {
       currentPage.value = totalPages.value
@@ -99,11 +99,11 @@ onKeyStroke('ArrowRight', () => {
 <template>
   <div class="epub-preview epub-box" :style="{ width, height }">
     <button class="btn" style="display: none" @keydown="prevKeyDown">
-      上一页
+      Previous Page
     </button>
     <div id="epub-viewer" class="epub-viewer"/>
     <button class="btn" style="display: none" @keydown="downKeyDown">
-      下一页
+      Next Page
     </button>
   </div>
 </template>

@@ -4,7 +4,7 @@ import type {Component} from 'vue'
  * VueFilesPreview
  */
 // region FilesPreview
-// 预览组件的规则配置
+// Preview component rule configuration
 export interface IPreviewRule {
     name: string
     type: PreviewType
@@ -12,16 +12,16 @@ export interface IPreviewRule {
     component: Component
 }
 
-// 预览组件类型 有多少预览模式 有多少个项
+// Preview component types - how many preview modes and items
 export enum PreviewType {
-    NONE = 'none', // 无类型
-    CODE = 'code', // 代码类型
+    NONE = 'none', // No type
+    CODE = 'code', // Code type
     DOC = 'doc',
-    DOCX = 'docx', // WORD文档
-    XLSX = 'xlsx', // Excel文件
+    DOCX = 'docx', // WORD document
+    XLSX = 'xlsx', // Excel file
     PDF = 'pdf', // PDF
-    PIC = 'pic', // 图片
-    TXT = 'txt', // 文本
+    PIC = 'pic', // Image
+    TXT = 'txt', // Text
     MD = 'md', // Markdown
     EPUB = 'epub', // epub
     PPT = 'ppt',
@@ -29,19 +29,19 @@ export enum PreviewType {
     VIDEO = 'video',
 }
 
-// render读取时使用的类型
+// Type used when reading render
 export type FileRenderType = 'text' | 'image' | 'pdf' | 'arrayBuffer' | 'video'
 
 // endregion
 
 // region common
-// 预览组件的基础属性 扩展属性使用 & 实现
+// Basic properties of preview component, extended properties use & implementation
 export interface PreviewProps {
-    // 接受文件对象
+    // Accept file object
     file?: File
-    // 链接
+    // Link
     url?: string
-    // 文件名称
+    // File name
     name?: string
 }
 

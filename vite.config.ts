@@ -8,7 +8,7 @@ import {copyPackageJsonPlugin} from './vite-plugins/copy.plugin'
 const pathSrc = path.resolve(__dirname, 'src')
 const pathPackages = path.resolve(__dirname, 'packages')
 
-// Vite 配置
+// Vite configuration
 export default defineConfig({
     resolve: {
         alias: {
@@ -21,8 +21,8 @@ export default defineConfig({
         dts({
             insertTypesEntry: true,
             outDir: 'dist/types',
-            include: ['./packages/**/*.ts', './packages/**/*.tsx', './packages/**/*.vue'], // 添加此行
-            tsconfigPath: './tsconfig.json', // 明确指定 tsconfig 文件路径
+            include: ['./packages/**/*.ts', './packages/**/*.tsx', './packages/**/*.vue'], // Add this line
+            tsconfigPath: './tsconfig.json', // Explicitly specify tsconfig file path
         }),
         copyPackageJsonPlugin(),
         AutoImport({
@@ -53,28 +53,28 @@ export default defineConfig({
                     globals: {
                         vue: 'Vue',
                     },
-                    // 打包格式
+                    // Build format
                     format: 'es',
-                    // 打包后文件名
+                    // Output file name
                     entryFileNames: '[name].mjs',
-                    // 让打包目录和我们目录对应
+                    // Keep build directory structure matching our directory
                     preserveModules: true,
                     exports: 'auto',
-                    // 配置打包根目录
+                    // Configure build root directory
                     dir: './dist/es',
                 },
                 {
                     globals: {
                         vue: 'Vue',
                     },
-                    // 打包格式
+                    // Build format
                     format: 'cjs',
-                    // 打包后文件名
+                    // Output file name
                     entryFileNames: '[name].js',
-                    // 让打包目录和我们目录对应
+                    // Keep build directory structure matching our directory
                     preserveModules: true,
                     exports: 'auto',
-                    // 配置打包根目录
+                    // Configure build root directory
                     dir: './dist/lib',
                 },
             ],

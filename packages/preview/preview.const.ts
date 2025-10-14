@@ -100,7 +100,7 @@ export const PreviewRules: Record<PreviewType, IPreviewRule> = {
 }
 
 /**
- * 根据文件类型获取rule
+ * Get rule by file type
  * @param type
  */
 export function getRuleByFileType(type: string): IPreviewRule {
@@ -108,7 +108,7 @@ export function getRuleByFileType(type: string): IPreviewRule {
 }
 
 /**
- * 根据文件类型获取PreviewType
+ * Get PreviewType by file type
  * @param type
  */
 export function getPreviewTypeByFileType(type: string): PreviewType {
