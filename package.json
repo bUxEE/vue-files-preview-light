@@ -1,26 +1,26 @@
 {
-  "name": "vue-files-preview",
+  "name": "vue-files-preview-light",
   "version": "1.0.38",
   "private": false,
-  "description": "A tool for previewing files such as doc, excel, pdf, image, markdown, txt, audio, and video and so on.",
-  "author": "SmallTeddy",
-  "maintainers": [
+  "description": "A lightweight, optimized fork of vue-files-preview with lazy loading and security updates. A tool for previewing files such as doc, excel, pdf, image, markdown, txt, audio, and video and so on.",
+  "author": "Woptima <web@woptima.com>",
+  "contributors": [
     {
-      "url": "https://github.com/wh131462",
-      "name": "EternalHeart",
-      "email": "hao131462@qq.com"
+      "name": "SmallTeddy",
+      "url": "https://github.com/VueFilesPreview"
     }
   ],
   "license": "MIT",
-  "homepage": "https://github.com/VueFilesPreview",
+  "homepage": "https://github.com/bUxEE/vue-files-preview-light",
   "repository": {
     "type": "git",
-    "url": "https://github.com/VueFilesPreview/vue-files-preview"
+    "url": "https://github.com/bUxEE/vue-files-preview-light.git"
   },
   "bugs": {
-    "url": "https://github.com/VueFilesPreview/vue-files-preview/issues"
+    "url": "https://github.com/bUxEE/vue-files-preview-light/issues"
   },
   "keywords": [
+    "vue-files-preview-light",
     "vue-file-preview",
     "vue3-file-preview",
     "file-preview",
@@ -28,8 +28,13 @@
     "vue3-preview",
     "vue3-viewer",
     "vue3-file-viewer",
+    "lazy-loading",
+    "optimized",
+    "security-updated",
     "vue",
-    "vue3"
+    "vue3",
+    "typescript",
+    "woptima"
   ],
   "scripts": {
     "lint": "eslint .",

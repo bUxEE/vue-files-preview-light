@@ -59,6 +59,7 @@ export function copyPackageJsonPlugin(): Plugin {
                     description: packageJson.description,
                     keywords: packageJson.keywords,
                     author: packageJson.author,
+                    contributors: packageJson.contributors,
                     license: packageJson.license,
                     repository: packageJson.repository,
                     bugs: packageJson.bugs,
