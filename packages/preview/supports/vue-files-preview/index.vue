@@ -10,6 +10,7 @@ const props = withDefaults(
     width?: string
     height?: string
     overflow?: string
+    useMammoth?: boolean // Use mammoth.js instead of @vue-office/docx for DOCX files
   }>(),
   {
     file: () => null,
@@ -17,6 +18,7 @@ const props = withDefaults(
     width: () => '100%',
     height: () => '100%',
     overflow: () => 'auto',
+    useMammoth: () => false,
   },
 )
 
@@ -25,7 +27,17 @@ const loadedComponent = shallowRef<any>(null)
 const isLoading = shallowRef(false)
 
 async function syncPreview(file: File): Promise<void> {
-  const preview = PreviewRules[getPreviewTypeByFileType(getFileType(file))]
+  const previewType = getPreviewTypeByFileType(getFileType(file))
+  let preview = PreviewRules[previewType]
+  
+  // Override DOCX preview component if useMammoth prop is true
+  if (previewType === PreviewType.DOCX && props.useMammoth) {
+    preview = {
+      ...preview,
+      component: () => import('../docx-preview-mammoth/index.vue'),
+    }
+  }
+  
   if (preview) {
     preview.name = getFileName(file)
     currentPreview.value = preview
@@ -49,10 +61,10 @@ async function syncPreview(file: File): Promise<void> {
 }
 
 watch(
-  () => props.file,
-  (file) => {
-    if (file) {
-      syncPreview(file)
+  () => [props.file, props.useMammoth],
+  () => {
+    if (props.file) {
+      syncPreview(props.file)
     }
   },
   { immediate: true },
@@ -77,7 +89,18 @@ watch(
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
+.vue-files-preview {
+  overflow: hidden !important;
+    > div {
+    width: 100%;
+    height: 100%;
+    > iframe {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
 .loading-placeholder {
   display: flex;
   align-items: center;

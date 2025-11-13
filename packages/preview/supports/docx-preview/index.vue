@@ -1,4 +1,4 @@
-<script lang='ts' setup>
+<script lang="ts" setup>
 import VueOfficeDocx from '@vue-office/docx'
 import '@vue-office/docx/lib/index.css'
 import {ref, watch} from 'vue'
@@ -16,10 +16,10 @@ const props = withDefaults(
 const fileRender = ref(null)
 watch(
     () => props.file,
-    () => {
-      getFileRenderByFile(props.file).then((render) => {
-        fileRender.value = render
-      })
+    (file) => {
+      if (file) {
+        getFileRenderByFile(file).then(render => (fileRender.value = render))
+      }
     },
     {immediate: true},
 )
@@ -34,9 +34,15 @@ function errorHandler(): void {
 </script>
 
 <template>
-  <div class="docx-preview">
+  <div class="docx-preview-vue-office">
     <VueOfficeDocx :src="fileRender" @rendered="renderedHandler" @error="errorHandler"/>
   </div>
 </template>
 
-<style scoped lang='scss'></style>
+<style scoped lang="scss">
+.docx-preview-vue-office {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+</style>

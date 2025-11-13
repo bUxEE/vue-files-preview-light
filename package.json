@@ -1,6 +1,6 @@
 {
   "name": "vue-files-preview-light",
-  "version": "1.0.38",
+  "version": "1.0.39",
   "private": false,
   "description": "A lightweight, optimized fork of vue-files-preview with lazy loading and security updates. A tool for previewing files such as doc, excel, pdf, image, markdown, txt, audio, and video and so on.",
   "author": "Woptima <web@woptima.com>",
@@ -37,6 +37,7 @@
     "woptima"
   ],
   "scripts": {
+    "dev": "vite",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "clean": "rimraf dist",
@@ -61,6 +62,7 @@
     "codemirror": "^6.0.1",
     "epubjs": "0.3.93",
     "highlight.js": "^11.11.1",
+    "mammoth": "^1.11.0",
     "markdown-it": "14.1.0",
     "markdown-it-container": "4.0.0",
     "markdown-it-footnote": "4.0.0",

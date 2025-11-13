@@ -1,7 +1,8 @@
 import type {App as Application} from 'vue'
-import DocxPreview from './index.vue'
+import DocxPreviewVueOffice from './index.vue'
 
-DocxPreview.install = (app: Application) => {
-    app.component('DocxPreview', DocxPreview)
+DocxPreviewVueOffice.install = (app: Application) => {
+    app.component('DocxPreviewVueOffice', DocxPreviewVueOffice)
 }
-export default DocxPreview
+export default DocxPreviewVueOffice
+
