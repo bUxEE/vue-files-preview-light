@@ -30,3 +30,6 @@ package-lock.json
 
 # version ts
 packages/version.ts
+
+# npm auth (never commit tokens)
+.npmrc
