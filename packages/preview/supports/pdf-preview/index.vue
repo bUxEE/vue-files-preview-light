@@ -3,17 +3,17 @@ import { watch } from 'vue'
 import type { PreviewProps } from '../../preview.interface'
 import { getFileRenderByFile } from '../../utils/utils'
 
-const props = withDefaults(defineProps<PreviewProps>(), {
-  url: () => null,
-  file: () => null,
-})
+const props = withDefaults(
+  defineProps<PreviewProps & { page?: number }>(),
+  { url: () => null, file: () => null, page: () => 1 },
+)
 
 const fileRender = ref(null)
 watch(
-  () => props.file,
-  (file) => {
-    if (file) {
-      getFileRenderByFile(file).then(render => (fileRender.value = render))
+  () => [props.file, props.page],
+  () => {
+    if (props.file) {
+      getFileRenderByFile(props.file, props.page).then(render => (fileRender.value = render))
     }
   },
   { immediate: true },

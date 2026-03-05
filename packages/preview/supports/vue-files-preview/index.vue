@@ -11,10 +11,12 @@ const props = withDefaults(
     height?: string
     overflow?: string
     useMammoth?: boolean // Use mammoth.js instead of @vue-office/docx for DOCX files
+    page?: number
   }>(),
   {
     file: () => null,
     url: () => null,
+    page: () => 1,
     width: () => '100%',
     height: () => '100%',
     overflow: () => 'auto',
@@ -82,6 +84,7 @@ watch(
       :name="currentPreview.name" 
       :file="file" 
       :url="url" 
+      :page="props.page"
     />
     <div v-else class="no-preview">
       No preview available for this file type
@@ -92,7 +95,7 @@ watch(
 <style lang="scss">
 .vue-files-preview {
   overflow: hidden !important;
-    > div {
+  > div {
     width: 100%;
     height: 100%;
     > iframe {

@@ -31,7 +31,7 @@ export function getFileName(file: File): string {
 /**
  * Get fileRender by file type
  */
-export function getFileRenderByFile(file: File): Promise<ArrayBuffer | string> {
+export function getFileRenderByFile(file: File, page?: number): Promise<ArrayBuffer | string> {
     const previewType = getPreviewTypeByFileType(getFileType(file))
     const renderType = getFileRenderType(previewType)
     return new Promise((resolve) => {
@@ -54,8 +54,8 @@ export function getFileRenderByFile(file: File): Promise<ArrayBuffer | string> {
                 resolve(window.URL.createObjectURL(raw))
                 break
             case 'pdf': {
-                const pdfBloBlob = new Blob([raw], {type: 'application/pdf'})
-                const pdfBlobUrl = URL.createObjectURL(pdfBloBlob)
+                const pdfBlob = new Blob([raw], {type: 'application/pdf'})
+                const pdfBlobUrl = URL.createObjectURL(pdfBlob)+(page ? '#page='+page : '')
                 resolve(pdfBlobUrl)
                 break
             }
