@@ -4,16 +4,16 @@ import type { PreviewProps } from '../../preview.interface'
 import { getFileRenderByFile } from '../../utils/utils'
 
 const props = withDefaults(
-  defineProps<PreviewProps & { page?: number }>(),
-  { url: () => null, file: () => null, page: () => 1 },
+  defineProps<PreviewProps & { page?: number, pdfSettings?: Record<string, string | number> }>(),
+  { url: () => null, file: () => null, page: () => 1, pdfSettings: () => null },
 )
 
 const fileRender = ref(null)
 watch(
-  () => [props.file, props.page],
+  () => [props.file, props.page, props.pdfSettings],
   () => {
     if (props.file) {
-      getFileRenderByFile(props.file, props.page).then(render => (fileRender.value = render))
+      getFileRenderByFile(props.file, props.page, props.pdfSettings).then(render => (fileRender.value = render))
     }
   },
   { immediate: true },

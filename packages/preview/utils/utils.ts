@@ -31,7 +31,22 @@ export function getFileName(file: File): string {
 /**
  * Get fileRender by file type
  */
-export function getFileRenderByFile(file: File, page?: number): Promise<ArrayBuffer | string> {
+export function buildPdfHash(page?: number, pdfSettings?: Record<string, string | number>): string {
+  const params: Record<string, string | number> = {}
+  if (page) {
+    params.page = page
+  }
+  if (pdfSettings) {
+    Object.assign(params, pdfSettings)
+  }
+  const entries = Object.entries(params)
+  if (!entries.length) {
+    return ''
+  }
+  return `#${entries.map(([k, v]) => `${k}=${v}`).join('&')}`
+}
+
+export function getFileRenderByFile(file: File, page?: number, pdfSettings?: Record<string, string | number>): Promise<ArrayBuffer | string> {
     const previewType = getPreviewTypeByFileType(getFileType(file))
     const renderType = getFileRenderType(previewType)
     return new Promise((resolve) => {
@@ -55,7 +70,7 @@ export function getFileRenderByFile(file: File, page?: number): Promise<ArrayBuf
                 break
             case 'pdf': {
                 const pdfBlob = new Blob([raw], {type: 'application/pdf'})
-                const pdfBlobUrl = URL.createObjectURL(pdfBlob)+(page ? '#page='+page : '')
+                const pdfBlobUrl = URL.createObjectURL(pdfBlob) + buildPdfHash(page, pdfSettings)
                 resolve(pdfBlobUrl)
                 break
             }
