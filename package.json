@@ -1,6 +1,6 @@
 {
   "name": "vue-files-preview-light",
-  "version": "1.0.41",
+  "version": "1.0.42",
   "private": false,
   "description": "A lightweight, optimized fork of vue-files-preview with lazy loading and security updates. A tool for previewing files such as doc, excel, pdf, image, markdown, txt, audio, and video and so on.",
   "author": "Woptima <web@woptima.com>",
@@ -46,7 +46,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "unpub": "npm unpublish",
-    "pub": "npm publish ./dist --access=public --registry=https://registry.npmjs.org"
+    "pub": "npm run build && npm publish ./dist --access=public --registry=https://registry.npmjs.org"
   },
   "publishConfig": {
     "access": "public"
