@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { watch } from 'vue'
 import type { PreviewProps } from '../../preview.interface'
-import { getFileRenderByFile } from '../../utils/utils'
+import { applyPdfSuffix, getFileRenderByFile } from '../../utils/utils'
 
 const props = withDefaults(
   defineProps<PreviewProps & { page?: number, pdfSettings?: Record<string, string | number> }>(),
-  { url: () => null, file: () => null, page: () => 1, pdfSettings: () => null },
+  { url: () => null, file: () => null, pdfSettings: () => null },
 )
 
 const fileRender = ref(null)
@@ -20,10 +20,10 @@ watch(
 )
 
 watch(
-  () => props.url,
-  (url) => {
+  () => [props.url, props.page, props.pdfSettings],
+  ([url]) => {
     if (url) {
-      fileRender.value = url
+      fileRender.value = applyPdfSuffix(url as string, props.page, props.pdfSettings)
     }
   },
   { immediate: true },

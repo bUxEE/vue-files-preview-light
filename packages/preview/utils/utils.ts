@@ -31,19 +31,43 @@ export function getFileName(file: File): string {
 /**
  * Get fileRender by file type
  */
-export function buildPdfHash(page?: number, pdfSettings?: Record<string, string | number>): string {
-  const params: Record<string, string | number> = {}
-  if (page) {
-    params.page = page
+function extractPdfPage(page?: number, pdfSettings?: Record<string, string | number>): [number | undefined, Record<string, string | number>] {
+  const settings = pdfSettings ? { ...pdfSettings } : {}
+  let effectivePage = page
+  if ('page' in settings) {
+    if (effectivePage === undefined) {
+      effectivePage = Number(settings.page)
+    }
+    delete settings.page
   }
-  if (pdfSettings) {
-    Object.assign(params, pdfSettings)
+  return [effectivePage, settings]
+}
+
+export function buildPdfSuffix(page?: number, pdfSettings?: Record<string, string | number>): string {
+  const [effectivePage, settings] = extractPdfPage(page, pdfSettings)
+  let suffix = ''
+  const entries = Object.entries(settings)
+  if (entries.length) {
+    suffix += `?${entries.map(([k, v]) => `${k}=${v}`).join('&')}`
   }
-  const entries = Object.entries(params)
-  if (!entries.length) {
-    return ''
+  if (effectivePage !== undefined) {
+    suffix += `#page=${effectivePage}`
   }
-  return `#${entries.map(([k, v]) => `${k}=${v}`).join('&')}`
+  return suffix
+}
+
+export function applyPdfSuffix(url: string, page?: number, pdfSettings?: Record<string, string | number>): string {
+  const [effectivePage, settings] = extractPdfPage(page, pdfSettings)
+  let result = url
+  const entries = Object.entries(settings)
+  if (entries.length) {
+    const qs = entries.map(([k, v]) => `${k}=${v}`).join('&')
+    result += (result.includes('?') ? '&' : '?') + qs
+  }
+  if (effectivePage !== undefined) {
+    result += `#page=${effectivePage}`
+  }
+  return result
 }
 
 export function getFileRenderByFile(file: File, page?: number, pdfSettings?: Record<string, string | number>): Promise<ArrayBuffer | string> {
@@ -70,7 +94,7 @@ export function getFileRenderByFile(file: File, page?: number, pdfSettings?: Rec
                 break
             case 'pdf': {
                 const pdfBlob = new Blob([raw], {type: 'application/pdf'})
-                const pdfBlobUrl = URL.createObjectURL(pdfBlob) + buildPdfHash(page, pdfSettings)
+                const pdfBlobUrl = URL.createObjectURL(pdfBlob) + buildPdfSuffix(page, pdfSettings)
                 resolve(pdfBlobUrl)
                 break
             }
