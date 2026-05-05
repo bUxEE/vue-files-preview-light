@@ -10,17 +10,18 @@ const props = withDefaults(
     width?: string
     height?: string
     overflow?: string
-    useMammoth?: boolean // Use mammoth.js instead of @vue-office/docx for DOCX files
+    useMammoth?: boolean
     page?: number
+    pdfSettings?: Record<string, string | number>
   }>(),
   {
     file: () => null,
     url: () => null,
-    page: () => 1,
     width: () => '100%',
     height: () => '100%',
     overflow: () => 'auto',
     useMammoth: () => false,
+    pdfSettings: () => null,
   },
 )
 
@@ -78,13 +79,14 @@ watch(
     <div v-if="isLoading" class="loading-placeholder">
       Loading preview...
     </div>
-    <component 
-      v-else-if="loadedComponent" 
-      :is="loadedComponent" 
-      :name="currentPreview.name" 
-      :file="file" 
-      :url="url" 
+    <component
+      v-else-if="loadedComponent"
+      :is="loadedComponent"
+      :name="currentPreview.name"
+      :file="file"
+      :url="url"
       :page="props.page"
+      :pdf-settings="props.pdfSettings"
     />
     <div v-else class="no-preview">
       No preview available for this file type
