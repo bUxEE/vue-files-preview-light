@@ -31,7 +31,7 @@ export function getFileName(file: File): string {
 /**
  * Get fileRender by file type
  */
-function extractPdfPage(page?: number, pdfSettings?: Record<string, string | number>): [number | undefined, Record<string, string | number>] {
+function buildPdfHash(page?: number, pdfSettings?: Record<string, string | number>): string {
   const settings = pdfSettings ? { ...pdfSettings } : {}
   let effectivePage = page
   if ('page' in settings) {
@@ -40,34 +40,19 @@ function extractPdfPage(page?: number, pdfSettings?: Record<string, string | num
     }
     delete settings.page
   }
-  return [effectivePage, settings]
+  const parts = Object.entries(settings).map(([k, v]) => `${k}=${v}`)
+  if (effectivePage !== undefined) {
+    parts.push(`page=${effectivePage}`)
+  }
+  return parts.length ? `#${parts.join('&')}` : ''
 }
 
 export function buildPdfSuffix(page?: number, pdfSettings?: Record<string, string | number>): string {
-  const [effectivePage, settings] = extractPdfPage(page, pdfSettings)
-  let suffix = ''
-  const entries = Object.entries(settings)
-  if (entries.length) {
-    suffix += `?${entries.map(([k, v]) => `${k}=${v}`).join('&')}`
-  }
-  if (effectivePage !== undefined) {
-    suffix += `#page=${effectivePage}`
-  }
-  return suffix
+  return buildPdfHash(page, pdfSettings)
 }
 
 export function applyPdfSuffix(url: string, page?: number, pdfSettings?: Record<string, string | number>): string {
-  const [effectivePage, settings] = extractPdfPage(page, pdfSettings)
-  let result = url
-  const entries = Object.entries(settings)
-  if (entries.length) {
-    const qs = entries.map(([k, v]) => `${k}=${v}`).join('&')
-    result += (result.includes('?') ? '&' : '?') + qs
-  }
-  if (effectivePage !== undefined) {
-    result += `#page=${effectivePage}`
-  }
-  return result
+  return url + buildPdfHash(page, pdfSettings)
 }
 
 export function getFileRenderByFile(file: File, page?: number, pdfSettings?: Record<string, string | number>): Promise<ArrayBuffer | string> {
